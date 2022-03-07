@@ -1,0 +1,20 @@
+parameters:
+  resourceGroupName: "destination resource group to deploy"
+  templateFile: "main bicep file"
+  parametersFile: "parameter file"
+  subscription: "subscription"
+  subscriptionID: "Name of specific subscription"
+  dbPassword: "password for Postgres Database"
+  orgFncKey: "Organizarion function master key"
+  usrFncKey: "User function master key"
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: "${{ parameters.subscription }}"
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az deployment group create --resource-group ${{ parameters.resourceGroupName }} --subscription ${{ parameters.subscriptionID }} --template-file ${{ parameters.templateFile }} --parameters ${{ parameters.parametersFile }} --parameters dbPassword="${{ parameters.dbPassword }}"
+  displayName: "Release ARM template"
+  

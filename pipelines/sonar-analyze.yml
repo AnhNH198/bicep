@@ -1,0 +1,89 @@
+trigger:
+- dev
+
+variables:
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+  # Sonarcloud Service connection's name
+  sonarCloudConnectionName: 'sonar-cloud-web'
+
+  # Sonar Cloud organization name
+  sonarCloudOrgName: ''
+
+  # Sonar Project-key
+  sonarCloudProjectKey: ''
+
+  # Sonar Project Name
+  sonarCloudProjectName: ' Web Dashboard'
+
+  # Project root folder. Point to the folder containing manage.py file.
+  projectRoot: $(System.DefaultWorkingDirectory)
+
+  # Python version: 3.7
+  pythonVersion: '3.7'
+
+jobs:
+  - job: BuildJob
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+      displayName: 'Use Python $(pythonVersion)'
+
+
+    # Prepare Analysis Configuration task
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: '$(sonarCloudConnectionName)'
+        organization: '$(sonarCloudOrgName)'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectKey: '$(sonarCloudProjectKey)'
+        cliProjectName: '$(sonarCloudProjectName)'
+        cliSources: '.'
+        extraProperties: |
+          sonar.c.file.suffixes=-
+          sonar.cpp.file.suffixes=-
+          sonar.objc.file.suffixes=-
+          sonar.exclusions= antenv/lib/**
+          sonar.python.version=3.7
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'npm install -g npm@6.14.15'
+      displayName: 'npm set version to 6.14.15'
+
+    - task: Npm@1
+      inputs:
+        command: 'install'
+        workingDir: '$(projectRoot)'
+      displayName: 'npm install packages'
+    
+    - task: Npm@1
+      inputs:
+        command: 'custom'
+        workingDir: '$(projectRoot)'
+        customCommand: 'run build'
+      displayName: 'npm build packages'
+
+    - script: |
+        python -m venv antenv
+        source antenv/bin/activate
+        python -m pip install --upgrade pip
+        pip install setup
+        pip install -r requirements.txt
+      workingDirectory: $(projectRoot)
+      displayName: "Install requirements"
+    
+    # Run Sonar Analyze
+    - task: SonarCloudAnalyze@1
+    
+    # Publish Sonar result after Analyze
+    - task: SonarCloudPublish@1
+      inputs:
+        pollingTimeoutSec: '300'
+  

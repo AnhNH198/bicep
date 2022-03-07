@@ -1,0 +1,14 @@
+jobs:
+  - job: "releaseToProd"
+    displayName: "Release to Production"
+    steps:
+      - template: "../tasks/release-arm-template.yml"
+        parameters:
+          templateFile: '$(System.DefaultWorkingDirectory)/arm/main.bicep'
+          parametersFile: '$(System.DefaultWorkingDirectory)/arm/main.parameters.prod.json'
+          resourceGroupName: "rg-webux-prod-we"
+          subscription: "azuredevops-webux-prod-connector"
+          subscriptionID: "apps-prod"
+          dbPassword: '$(db.password)'
+          orgFncKey: '$(org.fncmasterkey)'
+          usrFncKey: '$(usr.fncmasterkey)'

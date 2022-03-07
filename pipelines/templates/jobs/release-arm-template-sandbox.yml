@@ -1,0 +1,14 @@
+jobs:
+  - job: "releaseToDevTest"
+    displayName: "Release to sandbox"
+    steps:
+      - template: "../tasks/release-arm-template.yml"
+        parameters:
+          templateFile: '$(System.DefaultWorkingDirectory)/arm/main.bicep'
+          parametersFile: '$(System.DefaultWorkingDirectory)/arm/main.parameters.sandbox.json'
+          resourceGroupName: "rg-webux-sandbox-we"
+          subscription: "azuredevops-webux-sandbox-connector"
+          subscriptionID: "apps-sandbox"
+          dbPassword: '$(db.password)'
+          orgFncKey: '$(org.fncmasterkey)'
+          usrFncKey: '$(usr.fncmasterkey)'

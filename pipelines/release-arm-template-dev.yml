@@ -1,0 +1,26 @@
+trigger:
+ batch: true
+ branches:
+  include:
+    - develop
+ paths:
+  include:
+    - "arm"
+
+variables:
+- group: -WebUX
+- name: vmImageName 
+  value: 'ubuntu-latest'
+
+pool:
+  vmImage: $(vmImageName)
+
+stages:
+- stage: Dev
+  variables:
+  - template: ./variables/variables.yml
+  displayName: Deploy to dev
+  jobs:
+    - template: "./templates/jobs/release-arm-template-dev.yml"
+
+

@@ -1,0 +1,14 @@
+jobs:
+  - job: "releaseToDevTest"
+    displayName: "Release to Test"
+    steps:
+      - template: "../tasks/release-arm-template.yml"
+        parameters:
+          templateFile: '$(System.DefaultWorkingDirectory)/arm/main.bicep'
+          parametersFile: '$(System.DefaultWorkingDirectory)/arm/main.parameters.test.json'
+          resourceGroupName: "rg-webux-test-we"
+          subscription: "azuredevops-webux-test-connector"
+          subscriptionID: "apps-test"
+          dbPassword: '$(db.password)'
+          orgFncKey: '$(org.fncmasterkey)'
+          usrFncKey: '$(usr.fncmasterkey)'

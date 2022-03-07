@@ -1,0 +1,24 @@
+trigger:
+ batch: true
+ branches:
+  include:
+    - master
+ paths:
+  include:
+    - "arm"
+
+variables:
+- group: -WebUX
+- name: vmImageName 
+  value: 'ubuntu-latest'
+
+pool:
+  vmImage: $(vmImageName)
+
+stages:
+- stage: Prod
+  variables:
+  - template: ./variables/variables.yml
+  displayName: Deploy to prod
+  jobs:
+    - template : "./templates/jobs/release-arm-template-prod.yml"
