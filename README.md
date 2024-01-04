@@ -1,0 +1,3 @@
+az deployment group create --resource-group ${{ parameters.resourceGroupName }} --subscription ${{ parameters.subscriptionID }} --template-file ${{ parameters.templateFile }} --parameters ${{ parameters.parametersFile }} --parameters dbPassword="${{ parameters.dbPassword }}"
+
+az deployment group create --resource-group ${{ parameters.resourceGroupName }} --subscription ${{ parameters.subscriptionID }} --template-file ${{ parameters.templateFile }} --parameters ${{ parameters.parametersFile }}
