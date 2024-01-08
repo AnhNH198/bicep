@@ -13,12 +13,8 @@ resource networkInterfaces_testvm_nic_name_resource 'Microsoft.Network/networkIn
     ipConfigurations: [
       {
         name: '${networkInterfaces_testvm_nic_name}0'
-        id: '${networkInterfaces_testvm_nic_name_resource.id}/ipConfigurations/${networkInterfaces_testvm_nic_name}0'
-        etag: 'W/"86f78617-1292-45a6-9995-1bc5c90114cd"'
         type: 'Microsoft.Network/networkInterfaces/ipConfigurations'
         properties: {
-          provisioningState: 'Succeeded'
-          privateIPAddress: '172.16.1.4'
           privateIPAllocationMethod: 'Dynamic'
           subnet: {
             id: '${virtualNetworks_vm_externalid}/subnets/vm'
@@ -65,7 +61,6 @@ resource virtualMachines_testvm_name_resource 'Microsoft.Compute/virtualMachines
         writeAcceleratorEnabled: false
         managedDisk: {
           storageAccountType: 'Standard_LRS'
-          id: resourceId('Microsoft.Compute/disks', '${virtualMachines_testvm_name}_disk1_1ff72c89f8694a60a71c8a537429d665')
         }
         deleteOption: 'Detach'
         diskSizeGB: 30
@@ -75,6 +70,7 @@ resource virtualMachines_testvm_name_resource 'Microsoft.Compute/virtualMachines
     osProfile: {
       computerName: virtualMachines_testvm_name
       adminUsername: 'azureuser'
+      adminPassword: 'N@shtech2024'
       linuxConfiguration: {
         disablePasswordAuthentication: false
         ssh: {
@@ -89,7 +85,6 @@ resource virtualMachines_testvm_name_resource 'Microsoft.Compute/virtualMachines
       }
       secrets: []
       allowExtensionOperations: false
-      requireGuestProvisionSignal: true
     }
     networkProfile: {
       networkInterfaces: [

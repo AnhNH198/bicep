@@ -119,8 +119,8 @@
         "KVPolicies": {
             "value": [
               {
-                "tenantId": "77d10aed-42ad-42c1-a35b-58e1cf9f32a7",
-                "objectId": "dbc3ed6e-48f7-4594-85f9-c0bf356bd3bc",
+                "tenantId": "",
+                "objectId": "",
                 "permissions": {
                     "secrets": [
                         "list",
