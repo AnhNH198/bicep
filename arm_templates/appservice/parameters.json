@@ -1,0 +1,42 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_mainwebapp1123_name": {
+            "value": null
+        },
+        "sites_frontdoorweb213_name": {
+            "value": null
+        },
+        "components_mainwebapp1123_name": {
+            "value": null
+        },
+        "components_frontdoorweb213_name": {
+            "value": null
+        },
+        "publicIPAddresses_euuatpip1_name": {
+            "value": null
+        },
+        "serverfarms_ASP_terraformuat_9fc8_name": {
+            "value": null
+        },
+        "serverfarms_ASP_terraformuat_ae91_name": {
+            "value": null
+        },
+        "actionGroups_Application_Insights_Smart_Detection_name": {
+            "value": null
+        },
+        "smartdetectoralertrules_failure_anomalies___mainwebapp1123_name": {
+            "value": null
+        },
+        "smartdetectoralertrules_failure_anomalies___frontdoorweb213_name": {
+            "value": null
+        },
+        "workspaces_DefaultWorkspace_72a3f9e6_ddb2_4621_91ef_b5dd758420d1_EUS_externalid": {
+            "value": null
+        },
+        "workspaces_DefaultWorkspace_72a3f9e6_ddb2_4621_91ef_b5dd758420d1_CUS_externalid": {
+            "value": null
+        }
+    }
+}
